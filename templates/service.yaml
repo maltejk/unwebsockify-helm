@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "unwebsockify-helm.fullname" . }}
+  labels:
+    {{- include "unwebsockify-helm.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 13232
+      protocol: TCP
+      name: unwebsockify
+  selector:
+    {{- include "unwebsockify-helm.selectorLabels" . | nindent 4 }}
